@@ -1,54 +1,59 @@
-// const url =
-// 	'https://api.openweathermap.org/data/2.5/weather';
-// const apiKey =
-// 	'f00c38e0279b7bc85480c3fe775d518c';
-
-// $(document).ready(function () {
-// 	weatherFn('Pune');
-// });
-
-// async function weatherFn(cName) {
-// 	const temp =
-// 		`${url}?q=${cName}&appid=${apiKey}&units=metric`;
-// 	try {
-// 		const res = await fetch(temp);
-// 		const data = await res.json();
-// 		if (res.ok) {
-// 			weatherShowFn(data);
-// 		} else {
-// 			alert('City not found. Please try again.');
-// 		}
-// 	} catch (error) {
-// 		console.error('Error fetching weather data:', error);
-// 	}
-// }
-
-// function weatherShowFn(data) {
-// 	$('#city-name').text(data.name);
-// 	$('#date').text(moment().
-// 		format('MMMM Do YYYY, h:mm:ss a'));
-// 	$('#temperature').
-// 		html(`${data.main.temp}°C`);
-// 	$('#description').
-// 		text(data.weather[0].description);
-// 	$('#wind-speed').
-// 		html(`Wind Speed: ${data.wind.speed} m/s`);
-// 	$('#weather-icon').attr(
-//   	  'src',
-//   	  `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
-// 	$('#weather-icon').attr('alt', data.weather[0].description);
-// 	$('#weather-info').fadeIn();
-
-// }
-
-
 const url = 'https://api.openweathermap.org/data/2.5/weather';
 const apiKey = 'f00c38e0279b7bc85480c3fe775d518c';
 
+// GeoDB Cities API
+const geoapifyKey = '5b624b5177f04631b8a45e18f430ad6e'; //  Geoapify key
+const geoapifyBase = 'https://api.geoapify.com/v1/geocode/autocomplete'; //  RapidAPI key
+
 document.addEventListener('DOMContentLoaded', () => {
   weatherFn('Pune'); // Default city
+
   const button = document.getElementById('city-input-btn');
   const input = document.getElementById('city-input');
+  const suggestionsBox = document.getElementById('suggestions');
+
+  // Autocomplete as user types 3+ characters
+  input.addEventListener('input', async () => {
+    const query = input.value.trim();
+    suggestionsBox.innerHTML = '';
+
+    if (!query) {
+      suggestionsBox.style.display = 'none';
+      return;
+    }
+
+    try {
+      const url = `${geoapifyBase}?text=${encodeURIComponent(query)}&type=city&limit=5&apiKey=${geoapifyKey}`;
+      const res = await fetch(url);
+      const json = await res.json();
+      const results = json.features;
+
+      if (!results || results.length === 0) {
+        suggestionsBox.style.display = 'none';
+        return;
+      }
+
+      suggestionsBox.style.display = 'block';
+
+      results.forEach((feature) => {
+        const cityName = feature.properties.city || feature.properties.name;
+        const country = feature.properties.country;
+        const div = document.createElement('div');
+        div.textContent = `${cityName}, ${country}`;
+        div.classList.add('suggestion-item');
+        div.addEventListener('click', () => {
+          input.value = cityName;
+          suggestionsBox.style.display = 'none';
+          weatherFn(cityName);
+        });
+        suggestionsBox.appendChild(div);
+      });
+
+    } catch (err) {
+      console.error('Geoapify autocomplete error:', err);
+      suggestionsBox.style.display = 'none';
+    }
+  });
 
   // Button 
   button.addEventListener('click', () => {
@@ -117,3 +122,4 @@ function showError(message) {
   info.style.display = 'block';
   info.innerHTML = `<p style="color: red;">${message}</p>`;
 }
+
