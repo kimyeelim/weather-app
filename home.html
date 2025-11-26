@@ -22,7 +22,8 @@
 
 			<!-- Suggestions box -->
 			<div id="suggestions" class="suggestions-box"></div>
-
+			
+			<button id="city-input-btn"onclick="weatherFn($('#city-input').val())">Get Weather</button>
 			<div id="weather-info" class="animate__animated animate__fadeIn">
 				<h3 id="city-name"></h3>
 				<p id="date"></p>
@@ -30,7 +31,6 @@
 				<p id="temperature"></p>
 				<p id="description"></p>
 				<p id="wind-speed"></p>
-
 				<!-- NEW: Weather Tips -->
 				<p id="weather-tips" style="margin-top: 10px; font-weight: bold; color: purple;"></p>
 			</div>
@@ -38,3 +38,4 @@
 	</div>
 </body>
 </html>
+
