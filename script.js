@@ -2,8 +2,8 @@ const url = 'https://api.openweathermap.org/data/2.5/weather';
 const apiKey = 'f00c38e0279b7bc85480c3fe775d518c';
 
 // GeoDB Cities API
-const geoapifyKey = '5b624b5177f04631b8a45e18f430ad6e'; //  Geoapify key
-const geoapifyBase = 'https://api.geoapify.com/v1/geocode/autocomplete'; //  RapidAPI key
+const geoapifyKey = '5b624b5177f04631b8a45e18f430ad6e';
+const geoapifyBase = 'https://api.geoapify.com/v1/geocode/autocomplete';
 
 document.addEventListener('DOMContentLoaded', () => {
   weatherFn('Pune'); // Default city
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('city-input');
   const suggestionsBox = document.getElementById('suggestions');
 
-  // Autocomplete as user types 3+ characters
+  // Autocomplete
   input.addEventListener('input', async () => {
     const query = input.value.trim();
     suggestionsBox.innerHTML = '';
@@ -38,14 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
       results.forEach((feature) => {
         const cityName = feature.properties.city || feature.properties.name;
         const country = feature.properties.country;
+
         const div = document.createElement('div');
         div.textContent = `${cityName}, ${country}`;
         div.classList.add('suggestion-item');
+
         div.addEventListener('click', () => {
           input.value = cityName;
           suggestionsBox.style.display = 'none';
           weatherFn(cityName);
         });
+
         suggestionsBox.appendChild(div);
       });
 
@@ -55,13 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Button 
+  // Search button
   button.addEventListener('click', () => {
     const city = input.value.trim();
     if (city) weatherFn(city);
   });
 
-  // Enter key press
+  // Enter key
   input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       const city = input.value.trim();
@@ -70,26 +73,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Fetch weather
 async function weatherFn(cName) {
   const tempUrl = `${url}?q=${cName}&appid=${apiKey}&units=metric`;
   try {
     const res = await fetch(tempUrl);
     const data = await res.json();
+
     if (res.ok) {
       weatherShowFn(data);
     } else {
-      showError('City not found. Please try again.');
+      showError("City not found. Try again.");
     }
   } catch (error) {
-    console.error('Error fetching weather data:', error);
-    showError('Network error. Please try again later.');
+    console.error("Weather fetch error:", error);
+    showError("Network error. Try again later.");
   }
 }
 
+// Display weather
 function weatherShowFn(data) {
   document.getElementById('city-name').textContent = data.name;
 
-  // Format current date/time
   const now = new Date();
   const formattedDate = now.toLocaleString('en-US', {
     month: 'long',
@@ -101,25 +106,126 @@ function weatherShowFn(data) {
   });
   document.getElementById('date').textContent = formattedDate;
 
-  // Weather details
   document.getElementById('temperature').innerHTML = `${data.main.temp}°C`;
   document.getElementById('description').textContent = data.weather[0].description;
-  document.getElementById('wind-speed').innerHTML = `Wind Speed: ${data.wind.speed} m/s`;
+  document.getElementById('wind-speed').textContent = `Wind Speed: ${data.wind.speed} m/s`;
 
-  // Icon
   const icon = document.getElementById('weather-icon');
   icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-  icon.alt = data.weather[0].description;
 
-  // Show the weather info 
-  const info = document.getElementById('weather-info');
-  info.style.display = 'block';
-  info.classList.add('animate__animated', 'animate__fadeIn');
+  document.getElementById('weather-info').style.display = 'block';
+
+  generateWeatherTips(data);
 }
 
+// Weather recommendations
+function generateWeatherTips(data) {
+  const desc = data.weather[0].main.toLowerCase();
+  const temp = data.main.temp;
+  const humidity = data.main.humidity;
+  const wind = data.wind.speed;
+  let tips = [];
+
+  // CONDITION-BASED RECOMMENDATIONS //
+
+  if (desc.includes("rain")) {
+    tips.push("🌧 It's rainy — bring an umbrella or raincoat!");
+    tips.push("⚠ Roads may be slippery — walk carefully.");
+  }
+
+  if (desc.includes("thunder")) {
+    tips.push("⛈ Thunderstorm — stay indoors and avoid open areas!");
+    tips.push("⚡ Avoid metal objects and tall trees.");
+  }
+
+  if (desc.includes("snow")) {
+    tips.push("❄ Snowy — wear gloves, thick jackets, and warm boots!");
+    tips.push("🚗 Drive slowly — roads may be icy.");
+  }
+
+  if (desc.includes("cloud")) {
+    tips.push("☁ Cloudy skies — mild and comfortable.");
+    tips.push("📸 Soft light — great for taking photos!");
+  }
+
+  if (desc.includes("wind")) {
+    tips.push("🌬 Windy — secure loose items and avoid light umbrellas.");
+    if (wind >= 10) tips.push("💨 Strong wind — hold onto hats or loose clothing.");
+  }
+
+  if (
+    desc.includes("fog") ||
+    desc.includes("mist") ||
+    desc.includes("haze") ||
+    desc.includes("smoke")
+  ) {
+    tips.push("🌫 Low visibility — be careful walking or driving!");
+    tips.push("😷 Wear a mask if the air feels dusty or smoky.");
+  }
+
+  // 🌡 TEMPERATURE-BASED RECOMMENDATIONS  //
+
+  if (temp >= 40) {
+    tips.push("🔥 Extremely hot — avoid going outside if possible!");
+    tips.push("🥤 Drink water frequently to avoid dehydration.");
+    tips.push("🌡 Stay in shade or indoors during peak sunlight.");
+  } 
+  else if (temp >= 30) {
+    tips.push("☀️ Very hot — use sunscreen & sunglasses.");
+    tips.push("💧 Stay hydrated — drink plenty of water.");
+  } 
+  else if (temp >= 20) {
+    tips.push("🌤 Warm & pleasant — great weather to go outside!");
+    tips.push("🚶‍♂ Perfect for outdoor activities.");
+  } 
+  else if (temp >= 10) {
+    tips.push("🧥 Cool weather — light jacket recommended.");
+    tips.push("🍵 Warm drinks can make you feel comfortable.");
+  } 
+  else if (temp >= 0) {
+    tips.push("❄ Very cold — wear warm layers & gloves.");
+    tips.push("🔥 Stay warm indoors when possible.");
+  } 
+  else {
+    tips.push("🧊 Freezing — wear thick coats, scarves, gloves!");
+    tips.push("⚠ Risk of frostbite — limit time outdoors.");
+  }
+
+  // 💧 HUMIDITY-BASED RECOMMENDATIONS  //
+
+  if (humidity >= 80) {
+    tips.push("💦 High humidity — you may feel sweaty or sticky.");
+    tips.push("🍃 Stay in a well-ventilated place.");
+  } 
+  else if (humidity <= 30) {
+    tips.push("🌵 Dry air — drink water and consider moisturizer.");
+  }
+
+  // 🌬 WIND SPEED SPECIAL//
+
+  if (wind >= 15) {
+    tips.push("🌪 Strong winds — avoid cycling or motorbikes!");
+  }
+
+  //  ✨ FINAL OUTPUT  //
+
+  document.getElementById("weather-tips").innerHTML = tips
+    .map(t => `<li>${t}</li>`)
+    .join("");
+}
+
+
+
+// FIXED ERROR WITHOUT DELETING TIPS
 function showError(message) {
-  const info = document.getElementById('weather-info');
+  document.getElementById("city-name").textContent = "";
+  document.getElementById("date").textContent = "";
+  document.getElementById("temperature").textContent = "";
+  document.getElementById("description").textContent = "";
+  document.getElementById("wind-speed").textContent = "";
+  document.getElementById("weather-tips").textContent = "";
+  
+  const info = document.getElementById("weather-info");
   info.style.display = 'block';
-  info.innerHTML = `<p style="color: red;">${message}</p>`;
+  info.innerHTML = `<p style="color:red; font-weight:bold;">${message}</p>`;
 }
-
