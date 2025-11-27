@@ -8,21 +8,25 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
 	<title>Weather app</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://momentjs.com/downloads/moment.min.js"></script>
+	<script src="https://momentjs.com/downloads/moment.min.js">
+	</script>
 	<script src="script.js"></script>
 </head>
 
 <body>
 	<div class="container">
 		<div class="weather-card">
-			<h1 style="color: yellowgreen;">Weather Care</h1>
-
-			<input type="text" id="city-input" placeholder="Enter city name">
-			<!-- Suggestions box -->
-			<div id="suggestions" class="suggestions-box"></div>
-			
-			<button id="city-input-btn"onclick="weatherFn($('#city-input').val())">Get Weather</button>
-			<div id="weather-info" class="animate__animated animate__fadeIn">
+			<h1 style="color: green;">
+				Weather Care
+            </h1>
+			<input type="text" id="city-input"
+				placeholder="Enter city name">
+			<button id="city-input-btn"
+					onclick="weatherFn($('#city-input').val())">
+					Get Weather
+			</button>
+			<div id="weather-info"
+				class="animate__animated animate__fadeIn">
 				<h3 id="city-name"></h3>
 				<p id="date"></p>
 				<img id="weather-icon" src="" alt="Weather Icon">
@@ -32,9 +36,11 @@
 				<!-- NEW: Weather Tips -->
 				<p id="weather-tips" style="margin-top: 10px; font-weight: bold; color: purple;"></p>
 			</div>
+			<div id="forecast" class="animate__animated animate__fadeIn">
+				<h3>5-Day Forecast</h3>
+				<div id="forecast-cards" class="forecast-container"></div>
+			</div>
 		</div>
 	</div>
 </body>
 </html>
-
-
