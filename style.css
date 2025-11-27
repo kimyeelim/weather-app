@@ -2,10 +2,12 @@ body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     display: flex;
+    padding: 10px;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    min-height: 100vh; 
     background: linear-gradient(to right, #4CAF50, #2196F3);
+    overflow-y: auto; 
 }
 
 .container {
@@ -18,7 +20,7 @@ body {
     padding: 20px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
-    width: 450px;
+    min-width: 250px;
 }
 
 .weather-card:hover {
@@ -85,27 +87,47 @@ body {
 #date {
     font-size: 14px;
     color: rgb(255, 0, 0);
-
 }
-.suggestions-box {
-  background: white;
-  border: 1px solid #ccc;
-  max-height: 150px;
-  overflow-y: auto;
-  position: absolute;
-  width: 200px;
-  display: none;
-  z-index: 100;
+#forecast {
+    display: none;
+    margin-top: 20px;
 }
 
-.suggestion-item {
-  padding: 8px;
-  cursor: pointer;
+.forecast-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    
 }
 
-.suggestion-item:hover {
-  background: #f0f0f0;
+.forecast-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 10px;
+    width: 120px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
 }
 
+.forecast-card:hover {
+    transform: scale(1.05);
+}
 
+.forecast-card img {
+    width: 50px;
+    height: 50px;
+}
+
+@media (max-width: 700px) {
+    .forecast-card {
+        width: 90px; 
+        padding: 8px;
+    }
+
+    .forecast-container {
+        justify-content: center; 
+    }
+}
 
