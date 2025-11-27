@@ -210,7 +210,7 @@ function generateWeatherTips(data) {
   //  ✨ FINAL OUTPUT  //
 
   document.getElementById("weather-tips").innerHTML = tips
-    .map(t => `<li>${t}</li>`)
+    .map(t => `<p>${t}</p>`)
     .join("");
 }
 
@@ -229,3 +229,4 @@ function showError(message) {
   info.style.display = 'block';
   info.innerHTML = `<p style="color:red; font-weight:bold;">${message}</p>`;
 }
+
