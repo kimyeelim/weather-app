@@ -125,6 +125,9 @@ function weatherShowFn(data) {
   document.getElementById('weather-info').style.display = 'block';
 
   generateWeatherTips(data);
+
+  // Update background
+  updateBackground(data.weather[0].main);
 }
 
 // Weather recommendations
@@ -263,6 +266,28 @@ function forecastShowFn(forecastData) {
 
     $('#forecast').fadeIn();
 }
+// WEATHER BACKGROUND DISPLAY
+function updateBackground(weatherCondition) {
+  const body = document.body;
+  const condition = weatherCondition.toLowerCase();
+
+  if (condition.includes("clear")) {
+    body.style.backgroundImage = "url('images/sunny.jpg')";
+  } else if (condition.includes("rain")) {
+    body.style.backgroundImage = "url('images/rainy.jpg')";
+  } else if (condition.includes("cloud")) {
+    body.style.backgroundImage = "url('images/cloudy.jpg')";
+  } else if (condition.includes("snow")) {
+    body.style.backgroundImage = "url('images/snowy.jpg')";
+  } else {
+    body.style.backgroundImage = "url('images/default.jpg')";
+  }
+
+  body.style.backgroundSize = "cover";
+  body.style.backgroundPosition = "center";
+  body.style.transition = "background-image 1s ease-in-out";
+}
+
 
 
 
