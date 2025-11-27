@@ -1,6 +1,6 @@
 const url = 'https://api.openweathermap.org/data/2.5/weather';
 const apiKey = 'f00c38e0279b7bc85480c3fe775d518c';
-
+const forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 // GeoDB Cities API
 const geoapifyKey = '5b624b5177f04631b8a45e18f430ad6e';
 const geoapifyBase = 'https://api.geoapify.com/v1/geocode/autocomplete';
@@ -76,12 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fetch weather
 async function weatherFn(cName) {
   const tempUrl = `${url}?q=${cName}&appid=${apiKey}&units=metric`;
+  const forecastTemp = `${forecastUrl}?q=${cName}&appid=${apiKey}&units=metric`;
   try {
-    const res = await fetch(tempUrl);
+    // const res = await fetch(tempUrl);
+    // const data = await res.json();
+    const [res, forecastRes] = await Promise.all([
+      fetch(tempUrl),
+      fetch(forecastTemp)
+    ]);
+    
     const data = await res.json();
+    const forecastData = await forecastRes.json();
 
     if (res.ok) {
       weatherShowFn(data);
+      forecastShowFn(forecastData);
     } else {
       showError("City not found. Try again.");
     }
@@ -229,4 +238,32 @@ function showError(message) {
   info.style.display = 'block';
   info.innerHTML = `<p style="color:red; font-weight:bold;">${message}</p>`;
 }
+function forecastShowFn(forecastData) {
+    $('#forecast-cards').empty(); // Clear old forecasts
+
+    // Pick one forecast per day (around 12:00)
+    const dailyForecasts = forecastData.list.filter(item => item.dt_txt.includes("12:00:00"));
+
+    dailyForecasts.forEach(day => {
+        const date = moment(day.dt_txt).format('ddd, MMM D');
+        const icon = `https://openweathermap.org/img/wn/${day.weather[0].icon}.png`;
+        const temp = `${day.main.temp.toFixed(1)}°C`;
+        const desc = day.weather[0].description;
+
+        const card = `
+            <div class="forecast-card">
+                <p><strong>${date}</strong></p>
+                <img src="${icon}" alt="${desc}">
+                <p>${temp}</p>
+                <p>${desc}</p>
+            </div>
+        `;
+        $('#forecast-cards').append(card);
+    });
+
+    $('#forecast').fadeIn();
+}
+
+
+
 
