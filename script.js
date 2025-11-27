@@ -62,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
   button.addEventListener('click', () => {
     const city = input.value.trim();
     if (city) weatherFn(city);
+    suggestionsBox.style.display = 'none';
+    weatherFn(city);
   });
 
   // Enter key
@@ -69,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') {
       const city = input.value.trim();
       if (city) weatherFn(city);
+      suggestionsBox.style.display = 'none';
+      weatherFn(city);
     }
   });
 });
@@ -287,6 +291,7 @@ function updateBackground(weatherCondition) {
   body.style.backgroundPosition = "center";
   body.style.transition = "background-image 1s ease-in-out";
 }
+
 
 
 
