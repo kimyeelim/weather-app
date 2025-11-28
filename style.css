@@ -1,27 +1,26 @@
 body {
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  background: #2196F3;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh; 
+    background: linear-gradient(to right, #4CAF50, #2196F3);
+    overflow-y: auto; 
 }
 
-/* WEATHER CARD */
 .container {
-  text-align: center;
-  padding: 40px 0;
+    text-align: center;
 }
 
 .weather-card {
-  background-color: rgba(255,255,255,0.6);
-  backdrop-filter: blur(13px);
-  border-radius: 10px;
-  padding: 40px; /* Standard padding for large screens */
-  margin: auto;
-  width: 100%;
-  max-width: 1000px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease-in-out;
-  word-wrap: break-word; 
-  word-break: break-word;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    min-width: 250px;
 }
 
 .weather-card:hover {
@@ -31,9 +30,8 @@ body {
 #city-input {
     padding: 15px;
     margin: 10px 0;
-    width: 100%;
-    max-width: 700px;
-    border: 1px solid #504f4fa8;
+    width: 70%;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -122,21 +120,7 @@ body {
     height: 50px;
 }
 
-@media (max-width: 1000px) {
-    .container {
-    padding: 20px 0; 
-  }
-
-  .weather-card {
-    padding: 40px 10px; 
-    /* Slightly reduce the max width to ensure better overall fit with body padding */
-    max-width: 90%; 
-  }
-
-  #city-input {
-    width: 60%; /* Adjusted width for input field */
-    padding: 12px;
-  }
+@media (max-width: 700px) {
     .forecast-card {
         width: 90px; 
         padding: 8px;
@@ -166,61 +150,6 @@ body {
 .suggestion-item:hover {
   background: #f0f0f0;
 }
-
-/* CONTACT FORM */
-.contact-section {
-  background: transparent; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 30px;
-  padding: 10px 10px;
-}
-.contact-container {
-  width: 100%;
-  max-width: 1000px;
-  background: rgba(255,255,255,0.6); /* Glass effect  */
-  backdrop-filter: blur(13px);
-  border-radius: 10px;
-  padding-top: 0;
-  padding-left: 40px;
-  padding-bottom: 20px;
-  padding-right: 40px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease-in-out;
-}
-.contact-container:hover {
-    transform: scale(1.05);
-}
-.contact-form h2 {
-  text-align: center; margin-top: 10px; margin-bottom: 10px; font-size:28px;
-}
-.contact-form p {
-  text-align:center; margin-bottom:30px; font-size:16px; color:#000000;
-}
-.row { display:flex; gap:20px; flex-wrap:wrap; }
-.field { flex:1; display:flex; flex-direction:column; margin-bottom:10px; }
-.full { width:100%; }
-label { margin-bottom:6px; font-size:14px; font-weight:600; color:#000000; }
-input, textarea {
-  padding:14px; border:none; border-radius:12px; font-size:15px;
-  outline:none; background: rgba(255,255,255,0.2); color:#000000;
-  transition: all 0.3s ease;
-}
-input::placeholder, textarea::placeholder { color: #aaa; }
-input:focus, textarea:focus {
-  background: rgba(255,255,255,0.3);
-  box-shadow: 0 4px 15px rgba(255,255,255,0.4);
-}
-button {
-  margin:25px auto 0 auto; display:block;
-  padding:14px 40px; font-size:17px;
-  background: linear-gradient(135deg,#ff758c,#ff7eb3);
-  color:white; border:none; border-radius:30px; cursor:pointer;
-  transition: all 0.4s ease;
-}
-button:hover { transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,126,179,0.6); }
-@media (max-width:1000px){ .row{ flex-direction:column; } }
 
 
 
