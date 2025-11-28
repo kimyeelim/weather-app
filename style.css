@@ -1,26 +1,27 @@
 body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    display: flex;
-    padding: 10px;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh; 
-    background: linear-gradient(to right, #4CAF50, #2196F3);
-    overflow-y: auto; 
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #2196F3;
 }
 
+/* WEATHER CARD */
 .container {
-    text-align: center;
+  text-align: center;
+  padding: 40px 0;
 }
 
 .weather-card {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-    min-width: 250px;
+  background-color: rgba(255,255,255,0.6);
+  backdrop-filter: blur(13px);
+  border-radius: 10px;
+  padding: 40px; /* Standard padding for large screens */
+  margin: auto;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out;
+  word-wrap: break-word; 
+  word-break: break-word;
 }
 
 .weather-card:hover {
@@ -30,8 +31,9 @@ body {
 #city-input {
     padding: 15px;
     margin: 10px 0;
-    width: 70%;
-    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 700px;
+    border: 1px solid #504f4fa8;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -120,7 +122,21 @@ body {
     height: 50px;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
+    .container {
+    padding: 20px 0; 
+  }
+
+  .weather-card {
+    padding: 40px 10px; 
+    /* Slightly reduce the max width to ensure better overall fit with body padding */
+    max-width: 90%; 
+  }
+
+  #city-input {
+    width: 60%; /* Adjusted width for input field */
+    padding: 12px;
+  }
     .forecast-card {
         width: 90px; 
         padding: 8px;
@@ -151,7 +167,7 @@ body {
   background: #f0f0f0;
 }
 
-/* CONTACT FORM (Existing Styles)*/
+/* CONTACT FORM */
 .contact-section {
   background: transparent; 
   display: flex;
@@ -163,14 +179,18 @@ body {
 .contact-container {
   width: 100%;
   max-width: 1000px;
-  background: rgba(255,255,255,0.5); /* Glass effect  */
-  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.6); /* Glass effect  */
+  backdrop-filter: blur(13px);
   border-radius: 10px;
   padding-top: 0;
   padding-left: 40px;
   padding-bottom: 20px;
   padding-right: 40px;
   box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease-in-out;
+}
+.contact-container:hover {
+    transform: scale(1.05);
 }
 .contact-form h2 {
   text-align: center; margin-top: 10px; margin-bottom: 10px; font-size:28px;
@@ -187,7 +207,7 @@ input, textarea {
   outline:none; background: rgba(255,255,255,0.2); color:#000000;
   transition: all 0.3s ease;
 }
-input::placeholder, textarea::placeholder { color:#000000; }
+input::placeholder, textarea::placeholder { color: #aaa; }
 input:focus, textarea:focus {
   background: rgba(255,255,255,0.3);
   box-shadow: 0 4px 15px rgba(255,255,255,0.4);
