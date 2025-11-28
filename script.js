@@ -292,6 +292,36 @@ function updateBackground(weatherCondition) {
   body.style.transition = "background-image 1s ease-in-out";
 }
 
+//CONTACT FORM
+document.addEventListener('DOMContentLoaded', function(){
+  const form=document.querySelector('.contact-form');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const formData={
+      name:this.name.value,
+      email:this.email.value,
+      subject:this.subject.value,
+      message:this.message.value
+    };
+    fetch('https://68f9d725ef8b2e621e7da455.mockapi.io/message',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(formData)
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      alert('Message sent successfully!');
+      console.log('MockAPI response:',data);
+      this.reset();
+    })
+    .catch(err=>{
+      console.error('Error:',err);
+      alert('Failed to send message.');
+    });
+  });
+});
+
+
 
 
 
