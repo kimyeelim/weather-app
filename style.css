@@ -2,26 +2,31 @@ body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     display: flex;
-    padding: 10px;
+    padding: 20px;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh; 
-    background: linear-gradient(to right, #4CAF50, #2196F3);
+    background-image: url("cloudy.jpg"); 
     overflow-y: auto; 
 }
 
 .container {
     text-align: center;
+    padding: 40px 0; 
 }
 
 .weather-card {
     background-color: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(13px);
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 40px;
+    margin: auto;
+    width: 100%;
+    max-width: 1000px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
-    min-width: 250px;
+    word-wrap: break-word; 
+    word-break: break-word;
 }
 
 .weather-card:hover {
@@ -183,6 +188,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+
 
 
 
