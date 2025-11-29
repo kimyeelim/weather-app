@@ -127,6 +127,19 @@ body {
 }
 
 @media (max-width: 700px) {
+    .container {
+    padding: 20px 0; 
+    }
+
+    .weather-card {
+        padding: 40px 10px; 
+        max-width: 90%; 
+    }
+
+    #city-input {
+        width: 60%; 
+        padding: 12px;
+    }
     .forecast-card {
         width: 90px; 
         padding: 8px;
@@ -188,6 +201,54 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* CONTACT FORM */
+.contact-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 10px;
+}
+.contact-container {
+  margin: 20px;
+  width: 100%;
+  max-width: 700px;
+  background: rgba(255,255,255,0.6); /* Glass effect  */
+  backdrop-filter: blur(13px);
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease-in-out;
+}
+.contact-form h2 {
+  text-align: center; margin-top: 10px; margin-bottom: 10px; font-size:28px;
+}
+.contact-form p {
+  text-align:center; margin-bottom:30px; font-size:16px; color:#000000;
+}
+.row { display:flex; gap:20px; flex-wrap:wrap; }
+.field { flex:1; display:flex; flex-direction:column; margin-bottom:20px; }
+.full { width:100%; }
+label { margin-bottom:6px; font-size:14px; font-weight:600; color:#000000; }
+input, textarea {
+  padding:14px; border:none; border-radius:12px; font-size:15px;
+  outline:none; background: rgba(255,255,255,0.2); color:#000000;
+  transition: all 0.3s ease;
+}
+input::placeholder, textarea::placeholder { color: #aaa; }
+input:focus, textarea:focus {
+  background: rgba(255,255,255,0.3);
+  box-shadow: 0 4px 15px rgba(255,255,255,0.4);
+}
+button {
+  margin:30px auto 0 auto; display:block;
+  padding:14px 40px; font-size:17px;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:white; border:none; border-radius:30px; cursor:pointer;
+  transition: all 0.4s ease;
+}
+button:hover { transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,126,179,0.6); }
+@media (max-width:700px){ .row{ flex-direction:column; } }
 
 
 
