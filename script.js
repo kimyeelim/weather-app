@@ -265,11 +265,63 @@ function forecastShowFn(forecastData) {
                 <p>${desc}</p>
             </div>
         `;
+        $card.on("click", () => {
+          showForecastPopup({
+            date,
+            temp,
+            desc,
+            wind: day.wind.speed,
+            humidity: day.main.humidity
+            });
+        });
         $('#forecast-cards').append(card);
     });
 
     $('#forecast').fadeIn();
 }
+function showForecastPopup(day) {
+    const tips = [];
+
+    // Generate tips just like daily weather
+    const desc = day.desc.toLowerCase();
+    const tempNum = parseFloat(day.temp);
+    const wind = day.wind;
+    const humidity = day.humidity;
+
+    if (desc.includes("rain")) tips.push("🌧 Bring an umbrella — rainy weather!");
+    if (desc.includes("cloud")) tips.push("☁ Cloudy but comfortable.");
+    if (desc.includes("clear")) tips.push("☀ Clear skies — perfect for outdoor activities!");
+    if (desc.includes("snow")) tips.push("❄ Cold & snowy — wear warm layers!");
+
+    if (tempNum >= 30) tips.push("🥵 Very hot — drink lots of water.");
+    else if (tempNum <= 10) tips.push("🧥 Cold — wear a jacket.");
+
+    if (wind >= 10) tips.push("💨 Windy — secure hats and umbrellas!");
+
+    const popup = `
+        <div id="popup-overlay">
+            <div id="popup-box">
+                <h3>${day.date}</h3>
+                <p><strong>Temperature:</strong> ${day.temp}</p>
+                <p><strong>Description:</strong> ${day.desc}</p>
+                <p><strong>Wind Speed:</strong> ${day.wind} m/s</p>
+                <p><strong>Humidity:</strong> ${day.humidity}%</p>
+
+                <h4>Recommendations:</h4>
+                <div>${tips.map(t => `<p>${t}</p>`).join("")}</div>
+
+                <button id="close-popup">Close</button>
+            </div>
+        </div>
+`;
+
+    $("body").append(popup);
+
+    $("#close-popup").on("click", () => {
+        $("#popup-overlay").remove();
+    });
+}
+
 // WEATHER BACKGROUND DISPLAY
 function updateBackground(weatherCondition) {
   const body = document.body;
@@ -320,6 +372,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+
 
 
 
