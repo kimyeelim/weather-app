@@ -256,15 +256,16 @@ function forecastShowFn(forecastData) {
         const icon = `https://openweathermap.org/img/wn/${day.weather[0].icon}.png`;
         const temp = `${day.main.temp.toFixed(1)}°C`;
         const desc = day.weather[0].description;
+        const wind = day.wind.speed;
 
-        const card = `
-            <div class="forecast-card">
-                <p><strong>${date}</strong></p>
-                <img src="${icon}" alt="${desc}">
-                <p>${temp}</p>
-                <p>${desc}</p>
-            </div>
-        `;
+       const $card = $(`
+          <div class="forecast-card">
+              <p><strong>${date}</strong></p>
+              <img src="${icon}" alt="${desc}">
+              <p>${temp}</p>
+              <p>${desc}</p>
+          </div>
+      `);
         $card.on("click", () => {
           showForecastPopup({
             date,
@@ -372,6 +373,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+
 
 
 
