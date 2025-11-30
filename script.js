@@ -258,28 +258,32 @@ function forecastShowFn(forecastData) {
         const desc = day.weather[0].description;
         const wind = day.wind.speed;
 
-       const $card = $(`
-          <div class="forecast-card">
-              <p><strong>${date}</strong></p>
-              <img src="${icon}" alt="${desc}">
-              <p>${temp}</p>
-              <p>${desc}</p>
-          </div>
-      `);
-        $card.on("click", () => {
-          showForecastPopup({
-            date,
-            temp,
-            desc,
-            wind: day.wind.speed,
-            humidity: day.main.humidity
-            });
-        });
-        $('#forecast-cards').append(card);
+        const $card = $(`
+    <div class="forecast-card">
+        <p><strong>${date}</strong></p>
+        <img src="${icon}" alt="${desc}">
+        <p>${temp}</p>
+        <p>${desc}</p>
+    </div>
+`);
+
+$card.on("click", () => {
+    showForecastPopup({
+        date,
+        temp,
+        desc,
+        wind: day.wind.speed,
+        humidity: day.main.humidity
+    });
+});
+
+$('#forecast-cards').append($card);
+
     });
 
     $('#forecast').fadeIn();
 }
+
 function showForecastPopup(day) {
     const tips = [];
 
@@ -373,8 +377,6 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
-
-
 
 
 
