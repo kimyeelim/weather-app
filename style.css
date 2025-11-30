@@ -6,7 +6,10 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh; 
-    background-image: url("cloudy.jpg"); 
+    background-image: url("cloudy.jpg");
+    background-size: cover;
+    background-position: center ;
+    transition: background-image 1s ease-in-out;
     overflow-y: auto; 
 }
 
@@ -249,6 +252,7 @@ button {
 }
 button:hover { transform:translateY(-3px); box-shadow: 0 8px 20px rgba(255,126,179,0.6); }
 @media (max-width:700px){ .row{ flex-direction:column; } }
+
 
 
 
