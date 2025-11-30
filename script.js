@@ -343,10 +343,6 @@ function updateBackground(weatherCondition) {
   } else {
     body.style.backgroundImage = "url('images/default.jpg')";
   }
-
-  body.style.backgroundSize = "cover";
-  body.style.backgroundPosition = "center";
-  body.style.transition = "background-image 1s ease-in-out";
 }
 
 //CONTACT FORM
@@ -377,6 +373,7 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+
 
 
 
